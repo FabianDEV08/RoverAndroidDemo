@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center"
+                android:id="@+id/ivDogPhoto"
+                android:src="@drawable/ic_incognito_dog"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+
+            <Button
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:id="@+id/btAddPhoto"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:background="@drawable/button_background"
+                android:text="@string/add_dog_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"/>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:backgroundTint="@color/black"
+                android:hint="@string/dog_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:id="@+id/etDogName"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/black"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/dog_breed">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:id="@+id/etDogBreed"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/dog_age">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:id="@+id/etDogAge"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/dog_sex">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:id="@+id/etDogSex"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/owner_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:id="@+id/etOwnerName"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/owner_age">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:id="@+id/etOwnerAge"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/owner_address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:id="@+id/etOwnerAddress"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColorHint="@color/black"
+                android:hint="@string/owner_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:background="@android:color/transparent"
+                    android:digits="1234567890"
+                    android:inputType="phone"
+                    android:id="@+id/etOwnerPhone"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:id="@+id/btAddDog"
+                android:background="@drawable/button_background"
+                android:textColor="@color/white"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:text="@string/add_dog"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

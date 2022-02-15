@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Rover Android Demo</string>
+    <string name="rover_demo_app">Rover Demo App</string>
+    <string name="dog_name">Dog Name</string>
+    <string name="dog_breed">Dog Breed</string>
+    <string name="dog_age">Dog Age</string>
+    <string name="dog_sex">Dog Sex</string>
+    <string name="owner_name">Owner Name</string>
+    <string name="owner_address">Owner Address</string>
+    <string name="owner_age">Owner Age</string>
+    <string name="owner_phone">Owner Phone</string>
+    <string name="add_dog">Add Dog</string>
+    <string name="add_dog_photo">Add Dog Photo</string>
+    <string name="no_dogs_warning">No dogs have been added, try to add a dog to view the list.</string>
+    <string name="dog_name_warning">Please enter the dog name</string>
+    <string name="dog_breed_warning">Please enter dog breed</string>
+    <string name="dog_age_warning">Please enter dog age</string>
+    <string name="dog_sex_warning">Please enter dog sex</string>
+    <string name="owner_name_warning">Please enter Owner Name</string>
+    <string name="owner_age_warning">Please enter owner age</string>
+    <string name="dog_added_message">Dog added correctly</string>
+    <string name="inserting_owner_error">An error occur while creating the owner</string>
+    <string name="inserting_dog_error">An error occur while creating the dog</string>
+    <string name="close">close</string>
+</resources>
