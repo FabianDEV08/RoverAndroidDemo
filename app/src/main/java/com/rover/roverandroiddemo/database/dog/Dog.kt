@@ -24,9 +24,3 @@ class Dog(
     constructor(name: String, breed: String, age: Int, sex: String, dogPicture: ByteArray?, ownerId: Int):
             this(0, name, breed, age, sex, dogPicture, ownerId)
 }
-
-class DogAndPicture(
-    val dogId: Int,
-    val dogName: String,
-    val dogPicture: ByteArray? = null,
-)

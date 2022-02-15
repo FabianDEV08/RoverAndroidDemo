@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.rover.roverandroiddemo"
-        minSdk 30
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -108,9 +108,6 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.nhaarmanVersion"
     testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
     testImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
-    testImplementation "androidx.test.espresso:espresso-core:$rootProject.androidXEspressoVersion"
-    testImplementation "com.android.support.test.espresso:espresso-contrib:$rootProject.androidXEspressoVersion"
-    testImplementation "androidx.test.espresso:espresso-intents:$rootProject.androidXEspressoVersion"
     testImplementation "android.arch.core:core-testing:1.1.1"
     testImplementation "androidx.work:work-testing:$rootProject.workVersion"
     testImplementation 'androidx.test:runner:1.4.0'
