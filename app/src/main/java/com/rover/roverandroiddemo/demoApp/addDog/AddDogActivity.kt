@@ -120,7 +120,7 @@ class AddDogActivity: AppCompatActivity() {
             if(insertedOwnerId > -1L) {
                 val bitmap = (binding.ivDogPhoto.drawable as BitmapDrawable).bitmap
                 val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 10, stream)
                 val dog = Dog(
                     binding.etDogName.text.toString(),
                     binding.etDogBreed.text.toString(),

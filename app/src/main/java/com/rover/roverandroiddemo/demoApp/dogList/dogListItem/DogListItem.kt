@@ -1,6 +1,7 @@
 package com.rover.roverandroiddemo.demoApp.dogList.dogListItem
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.rover.roverandroiddemo.database.dog.Dog
@@ -16,13 +17,15 @@ class DogListItem(context: Context, private val clickCallback: (dog: Dog) -> Uni
     fun initView(dog: Dog) {
         dogListItem = dog
         binding.tvDogName.text = dog.name
+
+        val dogPictureByteArray = dog.dogPicture
+        if (dogPictureByteArray != null) {
+            val bmp = BitmapFactory.decodeByteArray(dogPictureByteArray, 0, dogPictureByteArray.size)
+            binding.ivDogPhoto.setImageBitmap(bmp)
+        }
+
         binding.liLayout.setOnClickListener {
             clickCallback(dogListItem)
         }
     }
-
-    fun getDogData(): Dog {
-        return dogListItem
-    }
-
 }

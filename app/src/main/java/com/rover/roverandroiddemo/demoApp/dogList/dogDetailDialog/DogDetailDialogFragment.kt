@@ -1,16 +1,19 @@
 package com.rover.roverandroiddemo.demoApp.dogList.dogDetailDialog
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.rover.roverandroiddemo.R
 import com.rover.roverandroiddemo.database.owner.OwnerAndDog
 import java.util.*
+
 
 class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragment() {
 
@@ -33,6 +36,12 @@ class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragme
         view.findViewById<TextView>(R.id.tvOwnerAge).text = dogDetails.ownerAge.toString()
         view.findViewById<TextView>(R.id.tvOwnerAddress).text = dogDetails.ownerAddress
         view.findViewById<TextView>(R.id.tvOwnerPhone).text = dogDetails.ownerPhone
+
+        val dogPictureByteArray = dogDetails.dogPicture
+        if (dogPictureByteArray != null) {
+            val bmp = BitmapFactory.decodeByteArray(dogPictureByteArray, 0, dogPictureByteArray.size)
+            view.findViewById<ImageView>(R.id.ivDogPhoto).setImageBitmap(bmp)
+        }
 
         view.findViewById<Button>(R.id.btClose).setOnClickListener {
             dialog?.dismiss()
