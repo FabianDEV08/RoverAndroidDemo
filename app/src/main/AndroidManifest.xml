@@ -24,7 +24,7 @@
 
         <activity android:theme="@style/Theme.RoverAndroidDemo"
             android:name=".demoApp.addDog.AddDogActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize"/>
 
     </application>
 

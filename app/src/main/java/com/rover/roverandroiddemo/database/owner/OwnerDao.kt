@@ -16,6 +16,9 @@ interface OwnerDao {
     @Query("SELECT * from owner ORDER BY id ASC")
     suspend fun getAllOwners(): List<Owner>
 
+    @Query("SELECT * from owner ORDER BY name ASC")
+    suspend fun getAllOwnersAlphabetically(): List<Owner>
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(owner: Owner): Long
 }

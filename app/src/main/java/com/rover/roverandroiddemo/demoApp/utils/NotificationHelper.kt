@@ -17,7 +17,7 @@ object NotificationHelper {
             view,
             message,
             Snackbar.LENGTH_INDEFINITE
-        ).setDuration(4000)
+        ).setDuration(2500)
         val snackBarView = snackBar.view
         snackBar.setActionTextColor(ContextCompat.getColor(context, android.R.color.white))
         snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.error_color))
@@ -31,7 +31,7 @@ object NotificationHelper {
             view,
             message,
             Snackbar.LENGTH_INDEFINITE
-        ).setDuration(4000)
+        ).setDuration(2500)
         val snackBarView = snackBar.view
         snackBar.setActionTextColor(ContextCompat.getColor(context, android.R.color.white))
         snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.success_color))

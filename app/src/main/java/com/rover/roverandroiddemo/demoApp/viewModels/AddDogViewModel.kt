@@ -24,6 +24,10 @@ class AddDogViewModel(application: Application): AndroidViewModel(application) {
         repository.insertDog(dog)
     }
 
+    suspend fun getOwnersAlphabetically(): List<Owner> = withContext(Dispatchers.IO) {
+        repository.getOwnersAlphabetically()
+    }
+
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(AddDogViewModel::class.java)) {

@@ -25,22 +25,21 @@
                 android:layout_height="200dp" />
 
             <Button
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="12dp"
+                android:layout_margin="20dp"
                 android:id="@+id/btAddPhoto"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:background="@drawable/button_background"
-                android:text="@string/add_dog_photo"
+                android:text="@string/take_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"/>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="8dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:backgroundTint="@color/black"
                 android:hint="@string/dog_name">
@@ -50,16 +49,16 @@
                     android:id="@+id/etDogName"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:backgroundTint="@color/black"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="8dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:hint="@string/dog_breed">
 
@@ -68,15 +67,15 @@
                     android:id="@+id/etDogBreed"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="6dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:hint="@string/dog_age">
 
@@ -87,32 +86,77 @@
                     android:inputType="number"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:background="@android:color/transparent"
-                android:layout_marginTop="6dp"
+            <TextView
+                android:layout_marginStart="26dp"
+                android:textSize="16sp"
+                android:text="@string/dog_sex"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"/>
+
+            <RadioGroup
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"/>
+
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:text="@string/owner"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"/>
+
+            <Spinner
+                android:layout_margin="30dp"
+                android:id="@+id/spOwnerSelect"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textColorHint="@color/black"
-                android:hint="@string/dog_sex">
+                android:spinnerMode="dropdown"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:background="@android:color/transparent"
-                    android:id="@+id/etDogSex"
-                    android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:text="@string/create_a_new_owner"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="6dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:hint="@string/owner_name">
 
@@ -121,15 +165,15 @@
                     android:id="@+id/etOwnerName"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="6dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:hint="@string/owner_age">
 
@@ -140,15 +184,15 @@
                     android:id="@+id/etOwnerAge"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="6dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:hint="@string/owner_address">
 
@@ -157,15 +201,15 @@
                     android:id="@+id/etOwnerAddress"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:background="@android:color/transparent"
-                android:layout_marginTop="6dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:textColorHint="@color/black"
                 android:hint="@string/owner_phone">
 
@@ -176,13 +220,13 @@
                     android:id="@+id/etOwnerPhone"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="40dp"
                 android:id="@+id/btAddDog"
                 android:background="@drawable/button_background"

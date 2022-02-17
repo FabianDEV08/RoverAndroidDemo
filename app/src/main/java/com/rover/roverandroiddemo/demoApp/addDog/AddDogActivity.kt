@@ -4,13 +4,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.rover.roverandroiddemo.R
 import com.rover.roverandroiddemo.database.dog.Dog
@@ -20,38 +23,67 @@ import com.rover.roverandroiddemo.demoApp.utils.NotificationHelper.displayErrorS
 import com.rover.roverandroiddemo.demoApp.utils.NotificationHelper.displaySuccessSnackBar
 import com.rover.roverandroiddemo.demoApp.viewModels.AddDogViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
+import java.util.stream.Collectors
 
-class AddDogActivity: AppCompatActivity() {
+class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityAddDogBinding
-    private val viewModel: AddDogViewModel by lazy {
-        ViewModelProvider(this).get(AddDogViewModel::class.java)
+    private var selectedOwner: Owner? = null
+    private var selectedSex: String? = null
+    private var dogPhoto: Bitmap? = null
+    private lateinit var ownerList: ArrayList<Owner>
+    private val viewModel: AddDogViewModel by viewModels {
+        AddDogViewModel.Factory(application)
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            binding.ivDogPhoto.setImageBitmap(imageBitmap)
+            dogPhoto = data?.extras?.get("data") as Bitmap
+            binding.ivDogPhoto.setImageBitmap(dogPhoto)
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAddDogBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
         binding.btAddDog.setOnClickListener {
             if (isFormValid(this@AddDogActivity)) {
-                addDog()
+                actionAddDog()
             }
         }
-
         binding.btAddPhoto.setOnClickListener {
             dispatchTakePictureIntent()
         }
+        binding.spOwnerSelect.onItemSelectedListener = this
+        binding.rbMale.setOnClickListener {
+            if ((it as RadioButton).isChecked) {
+                selectedSex = "male"
+            }
+        }
+        binding.rbFemale.setOnClickListener {
+            if ((it as RadioButton).isChecked) {
+                selectedSex = "female"
+            }
+        }
+        lifecycleScope.launch {
+            val ownerNameList = arrayListOf("Select...")
+            val owners = viewModel.getOwnersAlphabetically()
+            if (owners.isNotEmpty()) {
+                ownerList = ArrayList(owners)
+                val ownerNames = ownerList.stream().map(Owner::name).collect(Collectors.toList())
+                ownerNameList.addAll(ownerNames)
+            }
+            val adapter = ArrayAdapter(applicationContext, R.layout.spinner_owner_names, ownerNameList)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spOwnerSelect.adapter = adapter
+        }
+    }
+
+    private fun getOwnerIdByName(name: String): Owner? {
+        return ownerList.find { it.name == name }
     }
 
     private fun dispatchTakePictureIntent() {
@@ -61,6 +93,11 @@ class AddDogActivity: AppCompatActivity() {
 
     private fun isFormValid(context: Context): Boolean {
         val parentView = binding.parentLayout
+        parentView.clearFocus()
+        if (dogPhoto == null) {
+            displayErrorSnackBar(context, parentView, getString(R.string.take_photo_warning))
+            return false
+        }
         if (binding.etDogName.text.isNullOrEmpty()) {
             binding.etDogName.requestFocus()
             displayErrorSnackBar(context, parentView, getString(R.string.dog_name_warning))
@@ -76,71 +113,85 @@ class AddDogActivity: AppCompatActivity() {
             displayErrorSnackBar(context, parentView, getString(R.string.dog_age_warning))
             return false
         }
-        if (binding.etDogSex.text.isNullOrEmpty()) {
-            binding.etDogSex.requestFocus()
+        if (selectedSex == null) {
+            binding.rbMale.requestFocus()
             displayErrorSnackBar(context, parentView, getString(R.string.dog_sex_warning))
             return false
         }
-
+        if (selectedOwner != null) {
+            return true
+        }
         if (binding.etOwnerName.text.isNullOrEmpty()) {
             binding.etOwnerName.requestFocus()
-            displayErrorSnackBar(context, parentView, getString(R.string.owner_name_warning))
+            displayErrorSnackBar(context, parentView, getString(R.string.owner_warning))
             return false
         }
-
         if (binding.etOwnerAge.text.isNullOrEmpty()) {
             binding.etOwnerAge.requestFocus()
             displayErrorSnackBar(context, parentView, getString(R.string.owner_age_warning))
             return false
         }
-
         if (binding.etOwnerAddress.text.isNullOrEmpty()) {
             binding.etOwnerAddress.requestFocus()
-            displayErrorSnackBar(context, parentView, "Please enter owner address")
+            displayErrorSnackBar(context, parentView, getString(R.string.owner_address_warning))
             return false
         }
-
-        if (binding.etOwnerPhone.text.isNullOrEmpty()) {
-            binding.etOwnerPhone.requestFocus()
-            displayErrorSnackBar(context, parentView, "Please enter owner phone")
+        val ownerPhoneEditText = binding.etOwnerPhone
+        if (ownerPhoneEditText.text.isNullOrEmpty() || ownerPhoneEditText.text.toString().length != 10) {
+            ownerPhoneEditText.requestFocus()
+            displayErrorSnackBar(context, parentView, getString(R.string.owner_phone_warning))
             return false
         }
-
         return true
     }
 
-    private fun addDog() {
-        val owner = Owner(
-            binding.etOwnerName.text.toString(),
-            binding.etOwnerAge.text.toString().toInt(),
-            binding.etOwnerAddress.text.toString(),
-            binding.etOwnerPhone.text.toString())
-        lifecycleScope.launch {
-            val insertedOwnerId = viewModel.insertOwner(owner)
-            if(insertedOwnerId > -1L) {
-                val bitmap = (binding.ivDogPhoto.drawable as BitmapDrawable).bitmap
-                val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 10, stream)
-                val dog = Dog(
-                    binding.etDogName.text.toString(),
-                    binding.etDogBreed.text.toString(),
-                    binding.etDogAge.text.toString().toInt(),
-                    binding.etDogSex.text.toString(),
-                    stream.toByteArray(),
-                    insertedOwnerId.toInt()
-                )
-                val insertedDogId = viewModel.insertDog(dog)
-                if (insertedDogId > -1) {
-                    displaySuccessSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.dog_added_message))
-                    Handler(mainLooper).postDelayed({
-                        finish()
-                    }, 4000)
+    private fun insertDog(ownerId: Int) = runBlocking {
+        val stream = ByteArrayOutputStream()
+        dogPhoto!!.compress(Bitmap.CompressFormat.PNG, 10, stream)
+        val dog = Dog(
+            binding.etDogName.text.toString(),
+            binding.etDogBreed.text.toString(),
+            binding.etDogAge.text.toString().toInt(),
+            selectedSex!!,
+            stream.toByteArray(),
+            ownerId
+        )
+        val insertedDogId = viewModel.insertDog(dog)
+        if (insertedDogId > 0) {
+            displaySuccessSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.dog_added_message))
+            Handler(mainLooper).postDelayed({
+                finish()
+            }, 2500)
+        } else {
+            displayErrorSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.inserting_dog_error))
+        }
+    }
+
+    private fun actionAddDog() {
+        if (selectedOwner != null) {
+            insertDog(selectedOwner!!.id)
+        } else {
+            lifecycleScope.launch {
+                val owner = Owner(
+                    binding.etOwnerName.text.toString(),
+                    binding.etOwnerAge.text.toString().toInt(),
+                    binding.etOwnerAddress.text.toString(),
+                    binding.etOwnerPhone.text.toString())
+                val insertedOwnerId = viewModel.insertOwner(owner)
+                if (insertedOwnerId > 0L) {
+                    insertDog(insertedOwnerId.toInt())
                 } else {
-                    displayErrorSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.inserting_dog_error))
+                    displayErrorSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.inserting_owner_error))
                 }
-            } else {
-                displayErrorSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.inserting_owner_error))
             }
         }
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        selectedOwner = getOwnerIdByName(binding.spOwnerSelect.selectedItem.toString())
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        selectedOwner = null
     }
 }
