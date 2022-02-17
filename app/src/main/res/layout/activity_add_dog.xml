@@ -47,6 +47,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:background="@android:color/transparent"
                     android:id="@+id/etDogName"
+                    android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -65,6 +66,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:background="@android:color/transparent"
                     android:id="@+id/etDogBreed"
+                    android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -174,6 +176,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:background="@android:color/transparent"
                     android:id="@+id/etOwnerName"
+                    android:inputType="textPersonName"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -210,6 +213,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:background="@android:color/transparent"
                     android:id="@+id/etOwnerAddress"
+                    android:inputType="textPostalAddress"
                     android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

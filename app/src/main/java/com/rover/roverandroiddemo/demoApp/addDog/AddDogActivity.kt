@@ -204,7 +204,9 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        selectedOwner = getOwnerIdByName(binding.spOwnerSelect.selectedItem.toString())
+        if (position > 0) {
+            selectedOwner = getOwnerIdByName(binding.spOwnerSelect.selectedItem.toString())
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
