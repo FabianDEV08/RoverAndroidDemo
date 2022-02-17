@@ -38,6 +38,8 @@ class DogListActivity: AppCompatActivity() {
         dogListViewModel.allDogs.observe(this) { dogsList ->
             if (dogsList.isNotEmpty()) {
                 binding.tvNoDogsAdded.visibility = View.GONE
+            } else {
+                binding.tvNoDogsAdded.visibility = View.VISIBLE
             }
             val dogs = arrayListOf<Dog>()
             dogs.addAll(dogsList)
