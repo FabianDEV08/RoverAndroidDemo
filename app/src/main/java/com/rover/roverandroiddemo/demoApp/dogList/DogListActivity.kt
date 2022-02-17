@@ -18,56 +18,42 @@ import kotlinx.coroutines.launch
 
 class DogListActivity: AppCompatActivity() {
 
-    private var listAdapter: DogListAdapter? = null
+    private lateinit var listAdapter: DogListAdapter
     private lateinit var binding: ActivityDogListBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dogsFromDatabase: ArrayList<Dog>
-
-    private val dogListViewModel: DogListViewModel by viewModels {
-        DogListViewModel.Factory(application)
-    }
+    private val dogListViewModel: DogListViewModel by viewModels { DogListViewModel.Factory(application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityDogListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         recyclerView = binding.rvDogList
         recyclerView.layoutManager = GridLayoutManager(this, 1)
         recyclerView.setHasFixedSize(true)
-
+        listAdapter = DogListAdapter(arrayListOf(), { showDogDetail(it) }) {
+            lifecycleScope.launch {
+                dogListViewModel.deleteDog(it.id)
+            }
+        }
+        recyclerView.adapter = listAdapter
         dogListViewModel.allDogs.observe(this) { dogsList ->
             if (dogsList.isNotEmpty()) {
                 binding.tvNoDogsAdded.visibility = View.GONE
             }
-            val arrayList: ArrayList<Dog> = arrayListOf()
-            arrayList.addAll(dogsList)
-            dogsFromDatabase = arrayList
-            listAdapter = DogListAdapter(getDogsCopy()) {
-                showDogDetail(it)
-            }
-            recyclerView.adapter = listAdapter
+            val dogs = arrayListOf<Dog>()
+            dogs.addAll(dogsList)
+            listAdapter.updateItems(dogs)
         }
-
         binding.fab.setOnClickListener {
             startActivity(Intent(this@DogListActivity, AddDogActivity::class.java))
         }
+        setContentView(binding.root)
     }
 
     private fun showDogDetail(dog: Dog) {
         lifecycleScope.launch {
-            val dogAndOwner = dogListViewModel.getDogAndOwnerByDogId(dog.id).first()
-            val dogDetail: DogDetailDialogFragment = DogDetailDialogFragment(dogAndOwner)
+            val dogAndOwner = dogListViewModel.getDogAndOwnerByIds(dog.id, dog.ownerId).first()
+            val dogDetail = DogDetailDialogFragment(dogAndOwner)
             dogDetail.show(supportFragmentManager, "detail_dialog")
-        }
-    }
-
-    private fun getDogsCopy(): ArrayList<Dog> {
-        return if(dogsFromDatabase.isEmpty()) {
-            arrayListOf()
-        } else {
-            arrayListOf<Dog>().apply { addAll(dogsFromDatabase) }
         }
     }
 }

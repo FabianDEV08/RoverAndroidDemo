@@ -9,7 +9,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.rover.roverandroiddemo.R
 
 object NotificationHelper {
+
     private const val TAG = "NOTIFICATION_HELPER"
+
     @JvmStatic
     fun displayErrorSnackBar(context: Context, view: View, message: String) {
         if (!view.isAttachedToWindow) return

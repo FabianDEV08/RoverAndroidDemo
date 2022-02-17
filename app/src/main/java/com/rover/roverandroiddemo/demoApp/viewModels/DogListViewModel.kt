@@ -15,7 +15,9 @@ class DogListViewModel(application: Application): AndroidViewModel(application) 
 
     val allDogs = repository.allDogs.asLiveData()
 
-    suspend fun getDogAndOwnerByDogId(dogId: Int) = repository.getDogAndOwnerByDogId(dogId)
+    suspend fun getDogAndOwnerByIds(dogId: Int, ownerId: Int) = repository.getDogAndOwnerByIds(dogId, ownerId)
+
+    suspend fun deleteDog(id: Int) = repository.deleteDogById(id)
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

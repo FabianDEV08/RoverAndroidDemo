@@ -45,24 +45,13 @@ class OwnerTest {
     @Test
     fun will_get_all_owners_data_correctly() = runBlocking {
         populateDatabase(database.ownerDao, database.dogDao)
-
-        val owners = database.ownerDao.getAllOwners()
+        val owners = database.ownerDao.getAllOwnersAlphabetically()
         var currentOwnerData = owners[0]
-        assertEquals("Fabian", currentOwnerData.name)
-        currentOwnerData = owners[1]
         assertEquals("Daniel", currentOwnerData.name)
+        currentOwnerData = owners[1]
+        assertEquals("Fabian", currentOwnerData.name)
         currentOwnerData = owners[2]
         assertEquals("Laura", currentOwnerData.name)
-    }
-
-    @Test
-    fun will_retrieve_dog_and_owner_data_by_owner_id() = runBlocking {
-        populateDatabase(database.ownerDao, database.dogDao)
-        val ownerAndDogData = database.ownerDao.getOwnerAndDogByOwnerId(2).first()
-        assertEquals("Daniel", ownerAndDogData.ownerName)
-        assertEquals(32, ownerAndDogData.ownerAge)
-        assertEquals("Crazy Legs", ownerAndDogData.dogName)
-        assertEquals("Greyhound", ownerAndDogData.dogBreed)
     }
 
     @Test

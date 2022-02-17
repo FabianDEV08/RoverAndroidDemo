@@ -17,6 +17,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.concurrent.Executors
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(AndroidJUnit4::class)
@@ -44,9 +45,7 @@ class DogTest {
     @Test
     fun will_retrieve_dog_data_correctly() = runBlocking {
         populateDatabase(database.ownerDao, database.dogDao)
-
         val dogs = database.dogDao.getListOfAllDogs().first()
-
         var currentDogData = dogs[0]
         assertEquals("Crazy Legs", currentDogData.name)
         currentDogData = dogs[3]
@@ -55,5 +54,25 @@ class DogTest {
         currentDogData = dogs[4]
         assertEquals("French Poodle", currentDogData.breed)
         assertEquals(3, currentDogData.age)
+    }
+
+    @Test
+    fun will_delete_dog_correctly() = runBlocking {
+        populateDatabase(database.ownerDao, database.dogDao)
+        var dogs = database.dogDao.getListOfAllDogs().first()
+        assertEquals(5, dogs.size)
+        database.dogDao.delete(2)
+        database.dogDao.delete(5)
+        dogs = database.dogDao.getListOfAllDogs().first()
+        assertEquals(3, dogs.size)
+    }
+
+    @Test
+    fun will_correctly_retrieve_dog_and_owner_data() = runBlocking  {
+        populateDatabase(database.ownerDao, database.dogDao)
+        val retrievedDog = database.dogDao.getDogAndOwnerWithIds(2, 3).first()
+        assertNotNull(retrievedDog)
+        val newRetrievedDogList = database.dogDao.getDogAndOwnerWithIds(3, 3)
+        assertEquals(0, newRetrievedDogList.size)
     }
 }

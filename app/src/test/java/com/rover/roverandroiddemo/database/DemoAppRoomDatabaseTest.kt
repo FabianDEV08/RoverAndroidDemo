@@ -45,8 +45,7 @@ class DemoAppRoomDatabaseTest {
     @Test
     fun will_insert_data_correctly() = runBlocking {
         populateDatabase(database.ownerDao, database.dogDao)
-
-        val owners = database.ownerDao.getAllOwners()
+        val owners = database.ownerDao.getAllOwnersAlphabetically()
         assertEquals(3, owners.size)
         val dogs = database.dogDao.getListOfAllDogs().first()
         assertEquals(5, dogs.size)
@@ -61,7 +60,6 @@ class DemoAppRoomDatabaseTest {
             ownerDao.insert(owner)
             owner = Owner(3, "Laura", 29, "Yet Another House #789", "5555555555")
             ownerDao.insert(owner)
-
             var dog = Dog(1, "Max", "Doberman", 4, "male", null, 1)
             dogDao.insert(dog)
             dog = Dog(2, "Nahala", "French Poodle", 3, "female", null, 3)

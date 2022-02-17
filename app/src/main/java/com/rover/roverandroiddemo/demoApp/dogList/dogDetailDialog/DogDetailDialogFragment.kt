@@ -1,5 +1,6 @@
 package com.rover.roverandroiddemo.demoApp.dogList.dogDetailDialog
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,8 @@ import java.util.*
 
 
 class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragment() {
+
+    private var imageBitmap: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,15 +39,21 @@ class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragme
         view.findViewById<TextView>(R.id.tvOwnerAge).text = dogDetails.ownerAge.toString()
         view.findViewById<TextView>(R.id.tvOwnerAddress).text = dogDetails.ownerAddress
         view.findViewById<TextView>(R.id.tvOwnerPhone).text = dogDetails.ownerPhone
-
         val dogPictureByteArray = dogDetails.dogPicture
         if (dogPictureByteArray != null) {
-            val bmp = BitmapFactory.decodeByteArray(dogPictureByteArray, 0, dogPictureByteArray.size)
-            view.findViewById<ImageView>(R.id.ivDogPhoto).setImageBitmap(bmp)
+            imageBitmap = BitmapFactory.decodeByteArray(dogPictureByteArray, 0, dogPictureByteArray.size)
+            view.findViewById<ImageView>(R.id.ivDogPhoto).setImageBitmap(imageBitmap)
         }
-
         view.findViewById<Button>(R.id.btClose).setOnClickListener {
             dialog?.dismiss()
         }
+    }
+
+    override fun onDestroyView() {
+        if (imageBitmap != null) {
+            imageBitmap!!.recycle()
+            imageBitmap = null
+        }
+        super.onDestroyView()
     }
 }

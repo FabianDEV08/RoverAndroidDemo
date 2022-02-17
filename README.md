@@ -35,4 +35,22 @@ Be aware that we will have you use and modify this project for the in-person por
 
 ### Candidate Comments
 
-_Your comments go here._
+At the beginning I started thinking at the UX required to meet this challenge, I thought of a clean
+UI with easy controls and actions, I went with two main screens for presenting the UI, I knew the
+user had to create a dog to display in the list, so,I decided to plan what data I was going to need,
+I created a couple of models of data that I thought was essential for a dog to have, a dog has an
+owner so I decided to create a database in Room with two tables for Owners and Dogs in a one to many
+relationship, these data models have the most basic info for this demo with the purpose of making it
+simple, I decided to use Room to store the images of the dogs as byte arrays, the purpose for this
+is to avoid requesting permissions for storage to the user and also to avoid the case in which the
+picture taken is deleted by the user from the gallery app, I thought of using Glide for this purpose
+but since I was working with bytes and not path to images I ended up not using it.
+I used ViewModels for retrieving the data from the DB for each screen in the app, and using a live
+data observer I display the list of dogs from the DB into the main screen.
+For presenting the detail of the dog I used a DialogFragment in order to display the detail in the
+same screen as the list of dogs to avoid having to call a new activity for displaying the detail, I
+think it's a little bit more elegant that way.
+Finally I made DB testing to assert that the queries and CRUD methods used had the expected result.
+Overall it's a simple app built on the premise of minimizing time to value, giving the time that I
+had I created a basic app with the goal of solving the needs of this challenge that can be developed
+further driven by the requirements odf the users and client.

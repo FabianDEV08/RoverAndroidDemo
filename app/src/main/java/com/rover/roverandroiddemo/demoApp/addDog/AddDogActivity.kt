@@ -34,26 +34,21 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private var selectedSex: String? = null
     private var dogPhoto: Bitmap? = null
     private lateinit var ownerList: ArrayList<Owner>
-    private val viewModel: AddDogViewModel by viewModels {
-        AddDogViewModel.Factory(application)
-    }
-
+    private val viewModel: AddDogViewModel by viewModels { AddDogViewModel.Factory(application) }
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
+            checkBitmap()
             dogPhoto = data?.extras?.get("data") as Bitmap
             binding.ivDogPhoto.setImageBitmap(dogPhoto)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddDogBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.btAddDog.setOnClickListener {
-            if (isFormValid(this@AddDogActivity)) {
-                actionAddDog()
-            }
-        }
+        binding.btAddDog.setOnClickListener(addDogClickListener())
+        binding.btAddDog2.setOnClickListener(addDogClickListener())
         binding.btAddPhoto.setOnClickListener {
             dispatchTakePictureIntent()
         }
@@ -79,6 +74,27 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val adapter = ArrayAdapter(applicationContext, R.layout.spinner_owner_names, ownerNameList)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spOwnerSelect.adapter = adapter
+        }
+        setContentView(binding.root)
+    }
+
+    override fun onDestroy() {
+       checkBitmap()
+        super.onDestroy()
+    }
+
+    private fun checkBitmap() {
+        if (dogPhoto != null) {
+            dogPhoto!!.recycle()
+            dogPhoto = null
+        }
+    }
+
+    private fun addDogClickListener(): View.OnClickListener {
+        return View.OnClickListener {
+            if (isFormValid(this@AddDogActivity)) {
+                actionAddDog()
+            }
         }
     }
 
