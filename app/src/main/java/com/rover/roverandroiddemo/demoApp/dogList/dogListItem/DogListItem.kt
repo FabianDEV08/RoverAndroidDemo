@@ -14,7 +14,6 @@ class DogListItem(
     context: Context,
     private val clickCallback: (dog: Dog) -> Unit,
     private val deleteCallback: (dog: Dog) -> Unit): FrameLayout(context) {
-    private var imageBitmap: Bitmap? = null
 
     var binding: ListItemDogBinding =
         ListItemDogBinding.inflate(LayoutInflater.from(context), this, true)
@@ -36,10 +35,5 @@ class DogListItem(
         binding.ibDelete.setOnClickListener {
             deleteCallback(dog)
         }
-    }
-
-    fun recycleBitmap() {
-        imageBitmap?.recycle()
-        imageBitmap = null
     }
 }

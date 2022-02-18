@@ -24,10 +24,8 @@ import com.rover.roverandroiddemo.demoApp.utils.NotificationHelper.displaySucces
 import com.rover.roverandroiddemo.demoApp.viewModels.AddDogViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
@@ -43,7 +41,7 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            checkBitmap()
+            checkAndRecycleBitmap()
             dogPhoto = data?.extras?.get("data") as Bitmap
             binding.ivDogPhoto.setImageBitmap(dogPhoto)
         }
@@ -84,11 +82,11 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onDestroy() {
-        checkBitmap()
+        checkAndRecycleBitmap()
         super.onDestroy()
     }
 
-    private fun checkBitmap() {
+    private fun checkAndRecycleBitmap() {
         dogPhoto?.recycle()
         dogPhoto = null
     }
@@ -166,8 +164,6 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun insertDog(ownerId: Int) = runBlocking {
         val dogPhotoPath = saveDogPictureAndReturnPath() ?: return@runBlocking
-        val stream = ByteArrayOutputStream()
-        dogPhoto!!.compress(Bitmap.CompressFormat.PNG, 10, stream)
         val dog = Dog(
             binding.etDogName.text.toString(),
             binding.etDogBreed.text.toString(),

@@ -17,8 +17,6 @@ import java.util.*
 
 class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragment() {
 
-    private var imageBitmap: Bitmap? = null
-
     private lateinit var binding: DialogFragmentDogDetailBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -56,11 +54,5 @@ class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragme
         binding.btClose.setOnClickListener {
             dialog?.dismiss()
         }
-    }
-
-    override fun onDestroyView() {
-        imageBitmap?.recycle()
-        imageBitmap = null
-        super.onDestroyView()
     }
 }
