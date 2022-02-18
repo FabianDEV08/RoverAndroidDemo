@@ -30,9 +30,4 @@ class DogListAdapter(
         items = dogs
         notifyDataSetChanged()
     }
-
-    override fun onViewRecycled(holder: ViewHolder) {
-        holder.view.recycleBitmap()
-        super.onViewRecycled(holder)
-    }
 }
