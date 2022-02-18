@@ -25,6 +25,11 @@ import com.rover.roverandroiddemo.demoApp.viewModels.AddDogViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.FileWriter
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.stream.Collectors
 
 class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -160,6 +165,7 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun insertDog(ownerId: Int) = runBlocking {
+        val dogPhotoPath = saveDogPictureAndReturnPath() ?: return@runBlocking
         val stream = ByteArrayOutputStream()
         dogPhoto!!.compress(Bitmap.CompressFormat.PNG, 10, stream)
         val dog = Dog(
@@ -167,7 +173,7 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
             binding.etDogBreed.text.toString(),
             binding.etDogAge.text.toString().toInt(),
             selectedSex!!,
-            stream.toByteArray(),
+            dogPhotoPath,
             ownerId
         )
         val insertedDogId = viewModel.insertDog(dog)
@@ -178,6 +184,29 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }, 2500)
         } else {
             displayErrorSnackBar(this@AddDogActivity, binding.parentLayout, getString(R.string.inserting_dog_error))
+        }
+    }
+
+    private fun saveDogPictureAndReturnPath(): String? {
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat.getDateTimeInstance()
+        val formattedDate = formatter.format(date).replace(" ", "_")
+        return try {
+            val storagePath = applicationContext.getExternalFilesDir(null)?.absolutePath
+                ?: applicationContext.externalCacheDir?.absolutePath
+            val dogName = binding.etDogName.text.toString()
+            val fileName = storagePath + File.separator + dogName + "_${formattedDate}.jpg"
+            val dogPhotoFile = File(fileName)
+            if (!dogPhotoFile.exists()) {
+                val fos = FileOutputStream(dogPhotoFile)
+                dogPhoto!!.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                fos.flush()
+                fos.close()
+            }
+            return fileName
+        } catch (ex: Exception) {
+            displayErrorSnackBar(applicationContext, binding.parentLayout, getString(R.string.dog_photo_save_error))
+            null
         }
     }
 

@@ -31,4 +31,5 @@
     <string name="take_photo_warning">Please take a photo of the dog</string>
     <string name="owner_address_warning">Please enter owner address</string>
     <string name="owner_phone_warning">Please enter 10 digit owner phone</string>
+    <string name="dog_photo_save_error">Error while saving dog photo</string>
 </resources>

@@ -50,7 +50,7 @@ class DogTest {
         assertEquals("Crazy Legs", currentDogData.name)
         currentDogData = dogs[3]
         assertEquals("Max", currentDogData.name)
-        assertEquals(null, currentDogData.dogPicture)
+        assertEquals("photo_path.jpg", currentDogData.dogPicturePath)
         currentDogData = dogs[4]
         assertEquals("French Poodle", currentDogData.breed)
         assertEquals(3, currentDogData.age)

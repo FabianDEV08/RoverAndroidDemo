@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import com.bumptech.glide.Glide
+import com.rover.roverandroiddemo.R
 import com.rover.roverandroiddemo.database.dog.Dog
 import com.rover.roverandroiddemo.databinding.ListItemDogBinding
 
@@ -17,13 +19,17 @@ class DogListItem(
     var binding: ListItemDogBinding =
         ListItemDogBinding.inflate(LayoutInflater.from(context), this, true)
 
+    private fun displayDogPhoto(path: String) {
+        Glide.with(context)
+            .load(path)
+            .placeholder(R.drawable.ic_incognito_dog)
+            .fitCenter()
+            .into(binding.ivDogPhoto)
+    }
+
     fun initView(dog: Dog) {
         binding.tvDogName.text = dog.name
-        val dogPictureByteArray = dog.dogPicture
-        if (dogPictureByteArray != null) {
-            imageBitmap = BitmapFactory.decodeByteArray(dogPictureByteArray, 0, dogPictureByteArray.size)
-            binding.ivDogPhoto.setImageBitmap(imageBitmap)
-        }
+        displayDogPhoto(dog.dogPicturePath)
         binding.liLayout.setOnClickListener {
             clickCallback(dog)
         }

@@ -21,7 +21,7 @@ class OwnerAndDog(
     val dogBreed: String,
     val dogAge: Int,
     val dogSex: String,
-    val dogPicture: ByteArray? = null,
+    val dogPicture: String,
     val ownerName: String,
     val ownerAge: Int,
     val ownerAddress: String,

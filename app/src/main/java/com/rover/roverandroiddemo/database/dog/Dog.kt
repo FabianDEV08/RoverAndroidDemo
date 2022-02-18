@@ -17,10 +17,10 @@ class Dog(
     val breed: String,
     val age: Int,
     val sex: String,
-    @ColumnInfo(name = "dog_picture", typeAffinity = ColumnInfo.BLOB)
-    val dogPicture: ByteArray? = null,
+    @ColumnInfo(name = "dog_picture")
+    val dogPicturePath: String,
     @ColumnInfo(name = "owner_id") val ownerId: Int
 ) {
-    constructor(name: String, breed: String, age: Int, sex: String, dogPicture: ByteArray?, ownerId: Int):
-            this(0, name, breed, age, sex, dogPicture, ownerId)
+    constructor(name: String, breed: String, age: Int, sex: String, dogPicturePath: String, ownerId: Int):
+            this(0, name, breed, age, sex, dogPicturePath, ownerId)
 }

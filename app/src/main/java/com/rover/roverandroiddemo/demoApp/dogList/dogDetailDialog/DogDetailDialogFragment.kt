@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
+import com.rover.roverandroiddemo.R
 import com.rover.roverandroiddemo.database.owner.OwnerAndDog
 import com.rover.roverandroiddemo.databinding.DialogFragmentDogDetailBinding
 import java.util.*
@@ -32,6 +34,14 @@ class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragme
         return binding.root
     }
 
+    private fun displayDogPhoto(path: String) {
+        Glide.with(requireContext())
+            .load(path)
+            .placeholder(R.drawable.ic_incognito_dog)
+            .fitCenter()
+            .into(binding.ivDogPhoto)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvDogName.text = dogDetails.dogName
@@ -42,11 +52,7 @@ class DogDetailDialogFragment(private val dogDetails: OwnerAndDog): DialogFragme
         binding.tvOwnerAge.text = dogDetails.ownerAge.toString()
         binding.tvOwnerAddress.text = dogDetails.ownerAddress
         binding.tvOwnerPhone.text = dogDetails.ownerPhone
-        val dogPictureByteArray = dogDetails.dogPicture
-        if (dogPictureByteArray != null) {
-            imageBitmap = BitmapFactory.decodeByteArray(dogPictureByteArray, 0, dogPictureByteArray.size)
-            binding.ivDogPhoto.setImageBitmap(imageBitmap)
-        }
+        displayDogPhoto(dogDetails.dogPicture)
         binding.btClose.setOnClickListener {
             dialog?.dismiss()
         }

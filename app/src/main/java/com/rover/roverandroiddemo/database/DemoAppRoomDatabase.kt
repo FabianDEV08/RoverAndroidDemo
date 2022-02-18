@@ -14,7 +14,7 @@ import com.rover.roverandroiddemo.database.owner.OwnerDao
         Dog::class,
         Owner::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class DemoAppRoomDatabase: RoomDatabase() {
