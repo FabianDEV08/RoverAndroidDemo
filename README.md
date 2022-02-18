@@ -35,22 +35,52 @@ Be aware that we will have you use and modify this project for the in-person por
 
 ### Candidate Comments
 
+## My environment
+
+ - Android Studio Version: BumbleBee | 2021.1.1
+ - Kotlin Version: 1.5.0
+ - Gradle Version: 7.2
+ - Gradle Plugin Version: 7.0.1
+
+## Architecture
+
+I implemented MVVM in this project, I use ViewModel to have live data that serves the dog list, that
+way as soon as a dog is added the list will display it in the activity, I'm using Room for data
+persistence, the ViewModel requests the data from the DB and the DB serves it with LiveData which is
+observed in the View/Activity, this architecture is very popular and I find it very useful.
+
+## Thought Process
+
 At the beginning I started thinking at the UX required to meet this challenge, I thought of a clean
 UI with easy controls and actions, I went with two main screens for presenting the UI, I knew the
-user had to create a dog to display in the list, so,I decided to plan what data I was going to need,
-I created a couple of models of data that I thought was essential for a dog to have, a dog has an
-owner so I decided to create a database in Room with two tables for Owners and Dogs in a one to many
+user had to create a dog to display in the list, so, I decided to plan what data I was going to need,
+I created a couple of models of data that I thought was essential for a dog object to have, a dog has
+an owner so I decided to create a database in Room with two tables for Owners and Dogs in a one to many
 relationship, these data models have the most basic info for this demo with the purpose of making it
-simple, I decided to use Room to store the images of the dogs as byte arrays, the purpose for this
-is to avoid requesting permissions for storage to the user and also to avoid the case in which the
-picture taken is deleted by the user from the gallery app, I thought of using Glide for this purpose
-but since I was working with bytes and not path to images I ended up not using it.
-I used ViewModels for retrieving the data from the DB for each screen in the app, and using a live
-data observer I display the list of dogs from the DB into the main screen.
+simple.
+
+## Image Storage
+
+At the beginning I decided to use Room to store the images of the dogs as byte arrays, the purpose for
+this was to avoid requesting permissions for storage to the user and also to avoid the case in which
+the picture taken is deleted by the user from the gallery app, then I realized that I could use the
+internal storage to save the photos so I ended up using Glide for the loading of images.
+
+## Dog Details
+
 For presenting the detail of the dog I used a DialogFragment in order to display the detail in the
 same screen as the list of dogs to avoid having to call a new activity for displaying the detail, I
 think it's a little bit more elegant that way.
-Finally I made DB testing to assert that the queries and CRUD methods used had the expected result.
+
+## Testing
+
+Finally I made DB testing to assert that the queries and CRUD methods used can deliver the expected result.
+I've validated DB data insertion and also validated that the queries used are returning the data correctly,
+I wanted to make also a little bit of Instrumented tests but honestly that will take me more time and
+effort, however, I think the testing done to the DB is well done and covers the scenarios required.
+
+## Final Thoughts
+
 Overall it's a simple app built on the premise of minimizing time to value, giving the time that I
 had I created a basic app with the goal of solving the needs of this challenge that can be developed
-further driven by the requirements odf the users and client.
+further driven by the requirements of the users and client.
