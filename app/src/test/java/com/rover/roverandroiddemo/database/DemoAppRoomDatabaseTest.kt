@@ -64,7 +64,7 @@ class DemoAppRoomDatabaseTest {
             dogDao.insert(dog)
             dog = Dog(2, "Nahala", "French Poodle", 3, "female", null, 3)
             dogDao.insert(dog)
-            dog = Dog(3, "Mi Chingon", "Pitbull", 5, "male", null, 1)
+            dog = Dog(3, "Hulk", "Pit Bull", 5, "male", null, 1)
             dogDao.insert(dog)
             dog = Dog(4, "Crazy Legs", "Greyhound", 2, "male", null, 2)
             dogDao.insert(dog)

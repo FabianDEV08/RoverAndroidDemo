@@ -33,9 +33,7 @@ class DogListItem(
     }
 
     fun recycleBitmap() {
-        if (imageBitmap != null) {
-            imageBitmap!!.recycle()
-            imageBitmap = null
-        }
+        imageBitmap?.recycle()
+        imageBitmap = null
     }
 }

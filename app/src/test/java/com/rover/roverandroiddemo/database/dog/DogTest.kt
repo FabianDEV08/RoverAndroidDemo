@@ -49,7 +49,7 @@ class DogTest {
         var currentDogData = dogs[0]
         assertEquals("Crazy Legs", currentDogData.name)
         currentDogData = dogs[3]
-        assertEquals("Mi Chingon", currentDogData.name)
+        assertEquals("Max", currentDogData.name)
         assertEquals(null, currentDogData.dogPicture)
         currentDogData = dogs[4]
         assertEquals("French Poodle", currentDogData.breed)

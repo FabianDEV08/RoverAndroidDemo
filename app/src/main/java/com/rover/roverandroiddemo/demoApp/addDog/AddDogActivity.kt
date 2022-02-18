@@ -79,15 +79,13 @@ class AddDogActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onDestroy() {
-       checkBitmap()
+        checkBitmap()
         super.onDestroy()
     }
 
     private fun checkBitmap() {
-        if (dogPhoto != null) {
-            dogPhoto!!.recycle()
-            dogPhoto = null
-        }
+        dogPhoto?.recycle()
+        dogPhoto = null
     }
 
     private fun addDogClickListener(): View.OnClickListener {
